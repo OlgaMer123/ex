@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>пробую</title>
+        <link rel="icon" href="/img/icon.png" type="image/x-icon">
+        <meta charset="utf-8">
+        <style>
+            html, body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 20px;
+                padding: 0;
+                margin: 0;
+                color: rgb(59, 59, 59);
+            }
+            a {
+                color: black;
+                margin-right: 30px;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            header{
+                /*background-color: rgba(255, 255, 255, 0);*/
+                height: 100px;
+            }
+            .fixed-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                height: 100%;
+            }
+            header > div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            button {
+                font-size: 14px;
+                padding: 15px 45px;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+            .light-button {
+                background-color: transparent;
+                border: 1px solid black;
+            }
+            .dark-button {
+                background-color: rgb(255, 199, 227);
+                color: rgb(211, 3, 138);
+                border: 1px solid #ff5fbc;
+            }
+            .first-block > div {
+                margin: 0 auto;
+                height: 500px;
+                background-image: url('/img/kitik.jpg');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center right;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+            h1 {
+                font-size: 50px;
+                color: black;
+                margin: 0 0 20px 0;
+            }
+            h2 {
+                font-size: 40px;
+            }
+            .subtitle {
+                margin: 0 0 30px 0;
+            }
+            .services {
+                margin: 5px 0;
+                height: 250px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .services > div {
+                width: 210px;
+                height: 280px;
+                font-size: 16px;
+            }
+            .services img {
+                width: 175px;
+                height: 175px;
+                margin-bottom: 20px;
+            }
+            .layout-container {
+                position: fixed;
+                background-color: #000000a1;
+                height: 100%;
+                width: 100%;
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+            .layout {
+                background-color: white;
+                border-radius: 10px;
+                width: 400px;
+                padding: 30px;
+            }
+            .layout input {
+                font-size: 24px;
+                width: 100%;
+                margin-bottom: 25px;
+            }
+            .layout h2 {
+                font-size: 30px;
+                margin: 0 0 30px;
+            }
+            .zachem-container {
+                position: fixed;
+                background-color: #000000a1;
+                height: 100%;
+                width: 100%;
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+            .zachem {
+                background-color: white;
+                border-radius: 10px;
+                width: 400px;
+                padding: 30px;
+            }
+            .dengi-container {
+                position: fixed;
+                background-color: #000000a1;
+                height: 100%;
+                width: 100%;
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+            .dengi {
+                background-color: white;
+                border-radius: 10px;
+                width: 400px;
+                padding: 30px;
+            }
+
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+            $(function zayavka(){
+                let layoutContainer = $('.layout-container');
+                $('.second-block button').on('click', function(){
+                    layoutContainer.css('display', 'flex');
+                });
+
+                layoutContainer.on('click', function(e){
+                    if(this == e.target) {
+                        layoutContainer.css('display', 'none');
+                    }
+                });
+
+                $('.layout button').on('click', function(){
+                    let request = {
+                        'name': $('.layout input[name="name"]').val(),
+                        'email': $('.layout input[name="email"]').val()
+                    };
+
+                    $.post('/api.php', request, function(response){
+                        if(response == '1'){
+                            layoutContainer.css('display', 'none');
+                        }
+                        else {
+                            alert('Что-то пошло не так!');
+                        }
+                    });
+                });
+            });
+
+            $(function zach(){
+                let zachemContainer = $('.zachem-container');
+                $('.first-block button').on('click', function(){
+                    zachemContainer.css('display', 'flex');
+                });
+
+                zachemContainer.on('click', function(e){
+                    if(this == e.target) {
+                        zachemContainer.css('display', 'none');
+                    }
+                });
+            });
+
+            $(function den(){
+                let dengiContainer = $('.dengi-container');
+                $('.zanimat button').on('click', function(){
+                    dengiContainer.css('display', 'flex');
+                });
+
+                dengiContainer.on('click', function(e){
+                    if(this == e.target) {
+                        dengiContainer.css('display', 'none');
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="dengi-container">
+            <div class="dengi">
+                <h1>Чем у кого-то занимать.</h1>
+            </div>
+        </div>
+        <div class="layout-container">
+            <div class="layout">
+                <h2>Отправить заявку</h2>
+                <input type="text" name="name" placeholder="Ваше имя">
+                <input type="email" name="email" placeholder="Ваш E-mail">
+                <button class="dark-button">Отправить</button>
+            </div>
+        </div>
+        <div class="zachem-container">
+            <div class="zachem">
+                <h1>Зачем нажал?</h1>
+                <p>Вернись обратно к котику.</p>
+            </div>
+        </div>
+        <header>
+                <div class="fixed-container">
+                    <nav>
+                        <a href="#">Услуги</a>
+                        <a href="#">Портфолио</a>
+                        <a href="#">Стоимость</a>
+                    </nav>
+                    <div class="zanimat">
+                        <div>
+                            8 800 555-35-35
+                            &nbsp;&nbsp;&nbsp;
+                            <button class="light-button">Проще позвонить</button>
+                        </div>
+                    </div>
+                </div>
+        </header>
+        <section class="first-block">
+            <div class="fixed-container">
+                <h1>Котик (Милый)</h1>
+                <p class="subtitle">Просто полюбуйтесь</p>
+                <button class="dark-button">Кнопочка</button>
+            </div>
+        </section>
+        <section class="second-block">
+            <div class="fixed-container">
+                <h2>Что он делает</h2>
+                <div class="services">
+                    <div>
+                        <img src="/img/1.png">
+                        Мурчание и сопение
+                    </div>
+                    <div>
+                        <img src="/img/2.png">
+                        Кушание
+                    </div>
+                    <div>
+                        <img src="/img/3.png">
+                        Царапки
+                    </div>
+                    <div>
+                        <img src="/img/4.png">
+                        Просмотр рыбов
+                    </div>
+                </div>
+                <button class="light-button">Подать заявку</button>
+            </div>
+        </section>
+    </body>
+</html>
